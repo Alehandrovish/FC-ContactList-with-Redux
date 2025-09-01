@@ -1,0 +1,9 @@
+:root {
+  --borderForObjects: 3px solid black;
+}
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

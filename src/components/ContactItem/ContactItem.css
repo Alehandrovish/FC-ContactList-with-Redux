@@ -1,0 +1,16 @@
+@import "../../index.css";
+.content-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: var(--borderForObjects);
+  padding: 5px;
+}
+.focus {
+  background-color: crimson;
+}
+.btn-delete {
+  border: var(--borderForObjects);
+  cursor: pointer;
+}

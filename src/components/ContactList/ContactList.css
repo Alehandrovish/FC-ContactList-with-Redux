@@ -1,0 +1,15 @@
+.contacts-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 50%;
+}
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  overflow-y: scroll;
+  max-height: 80%;
+}
