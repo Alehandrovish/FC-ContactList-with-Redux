@@ -1,21 +1,31 @@
 import PropTypes from "prop-types";
 import ContactItem from "../ContactItem/ContactItem";
+
+import { getContacts, setAddMode } from "../../store/actions/contactsActions";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import api from "../../api/contact-service";
+
 import "./ContactList.css";
 
-function ContactList({ contacts, onDelete, onEditMode, idOfItem, onAddMode }) {
+function ContactList() {
+  const contacts = useSelector((state) => state.contacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    api.get("/").then(({ data }) => {
+      dispatch(getContacts(data));
+    });
+  }, []);
+
+  function onAddMode() {
+    dispatch(setAddMode());
+  }
   return (
     <section className="contacts-block">
       <section className="contacts-list">
         {contacts.map((contact) => {
-          return (
-            <ContactItem
-              key={contact.id}
-              contact={contact}
-              onDelete={onDelete}
-              onEnterEditMode={onEditMode}
-              idOfItem={idOfItem}
-            />
-          );
+          return <ContactItem key={contact.id} contact={contact} />;
         })}
       </section>
       <button onClick={onAddMode}>New</button>

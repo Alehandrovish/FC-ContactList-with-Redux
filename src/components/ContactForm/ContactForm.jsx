@@ -1,50 +1,55 @@
 import { useState, useEffect } from "react";
 import "./ContactForm.css";
 
-function ContactForm({ personData, saveNewArrContacts, onDelete }) {
-  const [formData, setFormData] = useState(personData);
+import api from "../../api/contact-service";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteContact,
+  addContact,
+  editContact,
+} from "../../store/actions/contactsActions";
+import { nanoid } from "nanoid";
+
+function ContactForm() {
+  const formData = useSelector((state) => state.personData);
+  const [localFormData, setLocalFormData] = useState(formData);
 
   useEffect(() => {
-    setFormData(personData);
-  }, [personData]);
+    setLocalFormData(formData);
+  }, [formData]);
+
+  const dispatch = useDispatch();
+
+  const { id, firstName, lastName, email, phone } = localFormData;
 
   function onInputChange(event) {
     const { name, value } = event.target;
-    setFormData((prev) => {
-      return { ...prev, [name]: value };
-    });
+    setLocalFormData({ ...localFormData, [name]: value });
   }
 
   function clearInput(event) {
     const inputSibling = event.target.parentNode.firstChild;
-    setFormData((prev) => {
-      return { ...prev, [inputSibling.name]: "" };
-    });
-  }
-
-  function clearAllInputs() {
-    setFormData({
-      id: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    });
+    setLocalFormData({ ...localFormData, [inputSibling.name]: "" });
   }
 
   function onFormSubmit(event) {
     event.preventDefault();
-    saveNewArrContacts(formData);
-    if (!formData.id) {
-      clearAllInputs();
+    if (id) {
+      api.put(`/${id}`, localFormData).then(({ data }) => {
+        dispatch(editContact(data));
+      });
+    } else {
+      const newContact = { ...localFormData, id: nanoid() };
+      api.post("/", newContact).then(({ data }) => {
+        dispatch(addContact(data));
+      });
     }
   }
 
-  const { id, firstName, lastName, email, phone } = formData;
-
   function onDeleteContact() {
-    onDelete(id);
-    clearAllInputs();
+    api.delete(`/${id}`).then(() => {
+      dispatch(deleteContact(id));
+    });
   }
 
   return (

@@ -1,19 +1,31 @@
 import "./ContactItem.css";
+import api from "../../api/contact-service";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteContact,
+  setEditMode,
+} from "../../store/actions/contactsActions";
 
-function ContactItem({ contact, onDelete, onEnterEditMode, idOfItem }) {
+function ContactItem({ contact }) {
+  const dispatch = useDispatch();
+  const idOfPerson = useSelector((state) => state.personData.id);
+
+  const { id, firstName, lastName } = contact;
+
   function onContactDelete(event) {
     event.stopPropagation();
-    onDelete(contact.id);
+    api.delete(`/${id}`).then(() => {
+      dispatch(deleteContact(id));
+    });
   }
 
   function onEdit() {
-    onEnterEditMode(contact);
+    dispatch(setEditMode(contact));
   }
 
-  const { id, firstName, lastName } = contact;
   return (
     <div
-      className={`content-item ${id === idOfItem ? " focus" : ""}`}
+      className={`content-item ${id === idOfPerson ? " focus" : ""}`}
       onDoubleClick={onEdit}
     >
       <p>
