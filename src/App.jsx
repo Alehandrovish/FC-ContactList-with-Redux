@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import ContactList from "./components/ContactList/ContactList";
 import ContactForm from "./components/ContactForm/ContactForm";
 import "./reset.css";

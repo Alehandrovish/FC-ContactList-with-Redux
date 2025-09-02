@@ -1,11 +1,9 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import ContactItem from "../ContactItem/ContactItem";
-
 import { getContacts, setAddMode } from "../../store/actions/contactsActions";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import api from "../../api/contact-service";
-
 import "./ContactList.css";
 
 function ContactList() {

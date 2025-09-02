@@ -1,10 +1,10 @@
-import "./ContactItem.css";
-import api from "../../api/contact-service";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteContact,
   setEditMode,
 } from "../../store/actions/contactsActions";
+import api from "../../api/contact-service";
+import "./ContactItem.css";
 
 function ContactItem({ contact }) {
   const dispatch = useDispatch();

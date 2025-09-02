@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import "./ContactForm.css";
-
-import api from "../../api/contact-service";
 import { useSelector, useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
+import api from "../../api/contact-service";
 import {
   deleteContact,
   addContact,
   editContact,
 } from "../../store/actions/contactsActions";
-import { nanoid } from "nanoid";
+import "./ContactForm.css";
 
 function ContactForm() {
   const formData = useSelector((state) => state.personData);

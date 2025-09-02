@@ -1,5 +1,6 @@
 import { initialContacts } from "../../model/initialContacts";
 import { initialPersonData } from "../../model/initialPersonData";
+import ACTION_TYPES from "../actions/actionTypes";
 
 const initialState = {
   contacts: initialContacts,
@@ -10,12 +11,12 @@ const emptyPerson = () => ({ ...initialPersonData });
 
 export default function reduser(state = initialState, { type, payload }) {
   switch (type) {
-    case "getContacts":
+    case ACTION_TYPES.GET_CONTACTS:
       return {
         ...state,
         contacts: payload,
       };
-    case "deleteContact":
+    case ACTION_TYPES.DELETE_CONTACT:
       return {
         ...state,
         contacts: state.contacts.filter((contact) =>
@@ -23,13 +24,13 @@ export default function reduser(state = initialState, { type, payload }) {
         ),
         personData: emptyPerson(),
       };
-    case "addContact":
+    case ACTION_TYPES.ADD_CONTACT:
       return {
         ...state,
         contacts: [...state.contacts, payload],
         personData: emptyPerson(),
       };
-    case "editContact": {
+    case ACTION_TYPES.EDIT_CONTACT: {
       return {
         ...state,
         contacts: state.contacts.map((contact) =>
@@ -37,12 +38,12 @@ export default function reduser(state = initialState, { type, payload }) {
         ),
       };
     }
-    case "setAddMode":
+    case ACTION_TYPES.SET_ADD_MODE:
       return {
         ...state,
         personData: emptyPerson(),
       };
-    case "setEditMode":
+    case ACTION_TYPES.SET_EDIT_MODE:
       return {
         ...state,
         personData: payload,
